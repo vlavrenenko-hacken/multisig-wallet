@@ -39,7 +39,7 @@ contract MultiSigWallet {
         uint numConfirmations;
     }
 
-    // mapping txIndex to (owner => bool)
+    /// @dev mapping txIndex to (owner => bool)
     mapping(uint => mapping(address => bool)) public isConfirmed;
 
     Transaction[] public transactions;
@@ -90,7 +90,7 @@ contract MultiSigWallet {
         numConfirmationsRequired = _numConfirmationsRequired;
     }
 
-    /// @dev Emits Deposit after funds were transfered to the contract address
+    /// @dev Allows the contract to receive funds and emits Deposit after funds were transfered to the contract address
     receive() external payable {
         emit Deposit(msg.sender, msg.value, address(this).balance);
     }
