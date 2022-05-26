@@ -151,7 +151,7 @@ contract MultiSigWallet {
     /// @param _txIndex The index of a transaction
     function executeTransaction(uint _txIndex)
         public
-        onlyOwner
+        onlyOwners
         txExists(_txIndex)
         notExecuted(_txIndex)
     {
