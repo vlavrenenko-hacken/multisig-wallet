@@ -77,6 +77,12 @@ contract MultiSigWallet {
         _;
     }
 
+    modifier isValidData(address _to, uint _value, bytes memory _data) {
+        require(_to != address(0), "Invalid the address of the recipient");
+        require(_value != 0 || _data.length !=0, "The tx can't be empty");
+        _;
+    }
+
     /// @dev Sets the values for {owners} and {numComfirmationsRequired}
     constructor(address[] memory _owners, uint _numConfirmationsRequired) {
         require(_owners.length > 0, "owners required");
