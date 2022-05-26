@@ -54,7 +54,7 @@ contract MultiSigWallet {
     Transaction[] public transactions;
 
     /// @dev Checks whether a sender is the owner or not
-    modifier onlyOwner() {
+    modifier onlyOwners() {
         require(isOwner[msg.sender], "not owner");
         _;
     }
