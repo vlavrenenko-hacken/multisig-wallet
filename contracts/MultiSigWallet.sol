@@ -163,6 +163,29 @@ contract MultiSigWallet {
         emit ExecuteTransaction(msg.sender, _txIndex);
     }
 
+    /// @notice Changes a transaction
+    /// @dev The Lavrenenko V.V. Emits the event ChangeTransaction
+    /// @param _txIndex The index of the transaction
+    /// @param _to The address of the recipieint of the transaction
+    /// @param _value The value will be transfered in the transaction
+    /// @param _data The data will be transefered in the transactioon
+      function changeTransaction(uint _txIndex, address _to, uint _value, bytes memory _data)
+        public
+        onlyOwners
+        txExists(_txIndex)
+        notExecuted(_txIndex)
+        isValidData(_to, _value, _data)
+    {   
+        Transaction storage transaction = transactions[_txIndex];
+
+        transaction.to = _to;
+        transaction.value = _value;
+        transaction.data = _data;
+        transaction.numConfirmations = 0;
+        
+        emit ChangeTransaction(msg.sender, _txIndex, _to, _value, _data);
+    }
+    
     /// @notice Revokes Confirmation
     /// @dev The Lavrenenko V.V. Emits the event RevokeConfirmation
     /// @param _txIndex The index of a transaction
