@@ -27,6 +27,15 @@ contract MultiSigWallet {
     /// @dev Emitted when a transaction is executed
     event ExecuteTransaction(address indexed owner, uint indexed txIndex);
 
+    /// @dev Emitted when a transaction is changed
+    event ChangeTransaction(
+        address indexed owner,
+        uint indexed txIndex,
+        address indexed _to,
+        uint _value,
+        bytes _data
+    );
+
     address[] public owners;
     mapping(address => bool) public isOwner;
     uint public numConfirmationsRequired;
