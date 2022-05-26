@@ -200,7 +200,7 @@ contract MultiSigWallet {
     /// @param _txIndex The index of a transaction
     function revokeConfirmation(uint _txIndex)
         public
-        onlyOwner
+        onlyOwners
         txExists(_txIndex)
         notExecuted(_txIndex)
     {
