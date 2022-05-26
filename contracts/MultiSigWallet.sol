@@ -113,7 +113,7 @@ contract MultiSigWallet {
         address _to,
         uint _value,
         bytes memory _data
-    ) public onlyOwner {
+    ) public onlyOwners isValidData(_to, _value, _data) {
         uint txIndex = transactions.length;
 
         transactions.push(
