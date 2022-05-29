@@ -81,7 +81,7 @@ describe("MultiSigWallet Test", function () {
       .withArgs(ownerAddress, txIndex, to, value, data);
   });
 
-  // // CONFIRM A TRANSACTION
+  // CONFIRM A TRANSACTION
   it("Should confirm a tx", async function () {
     const to = testContract.address;
     const value = ethers.utils.parseEther("1");
@@ -137,13 +137,11 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
 
-    // Executing a tx where 2 ETH is being transfered from the MultiSigWallet to the TestContract
     await multiSigWallet.connect(signers[0]).executeTransaction(txIndex);
 
     await expect(
@@ -179,13 +177,11 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
 
-    // Executing a tx where 4 ETH is being transfered from the MultiSigWallet to the TestContract
     await multiSigWallet.connect(signers[0]).executeTransaction(txIndex);
     expect(await ethers.provider.getBalance(to)).to.eq(value);
   });
@@ -200,13 +196,11 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[0]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
 
-    // Using the non-owner
     await expect(
       multiSigWallet.connect(signers[3]).executeTransaction(txIndex)
     ).to.be.revertedWith("not owner");
@@ -222,7 +216,6 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[0]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
@@ -244,13 +237,11 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
 
-    // Using the non-owner
     await expect(
       multiSigWallet.connect(signers[2]).executeTransaction(txIndex)
     ).to.emit(multiSigWallet, "ExecuteTransaction");
@@ -265,13 +256,11 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[0]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
 
-    // Using the non-owner
     await expect(
       multiSigWallet.connect(signers[0]).executeTransaction(1)
     ).to.be.revertedWith("tx does not exist");
@@ -288,13 +277,11 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
 
-    // Executing a tx where 4 ETH is being transfered from the MultiSigWallet to the TestContract
     await multiSigWallet.connect(signers[0]).executeTransaction(txIndex);
     await expect(
       multiSigWallet.connect(signers[0]).executeTransaction(txIndex)
@@ -363,7 +350,6 @@ describe("MultiSigWallet Test", function () {
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
@@ -507,18 +493,14 @@ describe("MultiSigWallet Test", function () {
     const txIndex = 0;
 
     await multiSigWallet.connect(signers[0]).submitTransaction(to, value, data);
-    // expect(await multiSigWallet.getTransactionCount()).to.eq(1);
     await multiSigWallet.connect(signers[0]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[1]).confirmTransaction(txIndex);
     await multiSigWallet.connect(signers[2]).confirmTransaction(txIndex);
 
-    // Transfer 10 ETH to the MultiSigWallet
     await signers[0].sendTransaction({
       to: multiSigWallet.address,
       value: ethers.utils.parseEther("2"),
     });
-
-    // Executing a tx where 4 ETH is being transfered from the MultiSigWallet to the TestContract
     await multiSigWallet.connect(signers[0]).executeTransaction(txIndex);
 
     await expect(
