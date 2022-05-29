@@ -78,8 +78,7 @@ contract MultiSigWallet {
     }
 
     modifier isValidData(address _to, uint _value, bytes memory _data) {
-        require(_to != address(0), "Invalid the address of the recipient");
-        require(_value != 0 || _data.length !=0, "The tx can't be empty");
+        require((_to != address(0)) && (_value != 0 || _data.length !=0), "invalid tx data");
         _;
     }
 
@@ -131,7 +130,6 @@ contract MultiSigWallet {
                 numConfirmations: 0
             })
         );
-
         emit SubmitTransaction(msg.sender, txIndex, _to, _value, _data);
     }
 
@@ -165,7 +163,7 @@ contract MultiSigWallet {
 
         require(
             transaction.numConfirmations >= numConfirmationsRequired,
-            "cannot execute tx"
+            "not confirmed"
         );
 
         transaction.executed = true;
