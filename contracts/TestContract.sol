@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 contract TestContract {
     uint public i;
 
-    function callMe(uint j) public {
+    function callMe(uint j) public payable {
         i += j;
     }
 
